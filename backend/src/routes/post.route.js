@@ -12,6 +12,7 @@ router.get("/:groupId", authProtect, getGroupPosts);
 
 //likes post
 router.post("/:postId/like", authProtect, toggleLike);
+ 
 
 //delete post sirf author kr skta hai (future me add krna hai)
 router.delete("/:postId", authProtect, deletePost);

@@ -100,3 +100,29 @@ export const logout = (req,res)=>{
          res.status(500).json({ message: "Server error", error: error.message , success:false });
     }
 }
+
+export const getMe = async (req, res) => {
+  try {
+    // authMiddleware se aaya hua userId
+    const userId = req.userId;
+
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};

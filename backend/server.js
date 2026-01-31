@@ -17,7 +17,10 @@ dotenv.config();
 const app = express();
 
 //Middleware in build
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 

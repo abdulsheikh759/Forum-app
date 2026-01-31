@@ -128,53 +128,39 @@ export const deletePost = async (req, res) => {
     }
 };
 
-export const toggleLike = async (req, res) => {
-    try {
-        const postId = req.params.postId;
-        const userId = req.userId;
+ export const toggleLike = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.userId;
 
-        // post exist?
-        const post = await Post.findById(postId);
-        if (!post) {
-            return res.status(404).json({
-                message: "Post not found"
-            });
-        }
+    const post = await Post.findById(postId);
 
-        //  already liked?
-        const alreadyLiked = post.likes.some(
-            id => id.toString() === userId
-        );
-
-        if (alreadyLiked) {
-            //  UNLIKE (remove)
-            post.likes = post.likes.filter(
-                id => id.toString() !== userId
-            );
-
-            await post.save();
-
-            return res.json({
-                message: "Like removed",
-                success: true,
-                likesCount: post.likes.length
-            });
-        } else {
-            // LIKE (add)
-            post.likes.push(userId);
-            await post.save();
-
-            return res.json({
-                message: "Post liked",
-                success: true,
-                likesCount: post.likes.length
-            });
-        }
-
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message
-        });
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
     }
+
+    const index = post.likes.findIndex(
+      (id) => id.toString() === userId
+    );
+
+    if (index > -1) {
+      // UNLIKE
+      post.likes.splice(index, 1);
+    } else {
+      // LIKE
+      post.likes.push(userId);
+    }
+
+    await post.save();
+
+    return res.json({
+      success: true,
+      post,
+    });
+  } catch (err) {
+    console.error("LIKE ERROR 👉", err);
+    res.status(500).json({ message: err.message });
+  }
 };
+
 

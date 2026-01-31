@@ -1,16 +1,58 @@
-# React + Vite
+ Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend part of the Mini Community Forum application.
+It is built using React and connects with a Node.js + Express backend via REST APIs.
 
-Currently, two official plugins are available:
+Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  React (with Hooks)
+  React Router DOM
+  Axios
+  Context API (Authentication)
+  React Toastify
+  Tailwind CSS (basic styling)
 
-## React Compiler
+Features Implemented
+ User authentication using JWT (via backend)
+ View posts inside a grou
+ Create a post in a group
+ Like / Unlike a post
+ View comments on a post
+ Add and delete comments
+ Protected routes using auth token
+ Backend APIs tested and working via Postman
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ Install dependencies
+ npm install
 
-## Expanding the ESLint configuration
+ Start the frontend
+ npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ Main APIs used:
+ GET /api/posts/:groupId
+ POST /api/posts/:groupId
+ POST /api/posts/:postId/like
+ GET /api/comments/:postId
+ POST /api/comments/:postId
+ DELETE /api/comments/:commentId
+
+
+ Backend Status
+
+✅ Backend APIs are fully implemented and tested using Postman
+✅ Like / Unlike and Comment logic works correctly on backend
+⚠️ There is a minor frontend state synchronization issue related to like/comment UI rendering, which is currently being worked on.
+
+The core logic, API flow, and data handling are correct.
+
+
+Notes
+Focus of this project is functionality over UI
+Clean API integration and authentication flow
+Code written with readability and clarity in mind
+Project is suitable for junior-level evaluation
+
+Author
+Abdul Khalid
+Junior Full Stack Developer
+(React | Node.js | MongoDB)
