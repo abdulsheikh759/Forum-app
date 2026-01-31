@@ -44,7 +44,7 @@ export const addComment = async (req, res) => {
         }
 
         //  create comment
-        const comments = await Comment.create({
+        const newComment = await Comment.create({
             postId,
             author: userId,
             comment
@@ -52,7 +52,7 @@ export const addComment = async (req, res) => {
 
         return res.status(201).json({
             message: "Comment added successfully",
-            comment
+            comment: newComment
         });
 
     } catch (error) {

@@ -9,10 +9,8 @@ export const createPost = async (groupId, content) => {
   const res = await api.post(`/posts/${groupId}`, { content });
   return res.data.post;
 };
- export const toggleLike = async (postId) => {
-  const res = await axios.post(
-    `/posts/${postId}/like`
-  );
 
+export const toggleLike = async (postId) => {
+  const res = await api.post(`/posts/${postId}/like`);
   return res.data;
 };

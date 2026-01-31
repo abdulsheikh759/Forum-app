@@ -29,6 +29,7 @@ export default function GroupPage() {
             id: p._id,
             text: p.content,
             authorId: p.author?._id || p.author,
+            authorName: p.author?.username || "Unknown",
             likes: p.likes || [],        // ✅ ALWAYS ARRAY
             showComments: false,
             comments: [],
@@ -60,6 +61,7 @@ export default function GroupPage() {
           id: newPost._id,
           text: newPost.content,
           authorId: currentUserId,
+          authorName: user?.username || "You",
           likes: [],
           showComments: false,
           comments: [],
@@ -105,8 +107,9 @@ export default function GroupPage() {
                 ...p,
                 comments: data.map((c) => ({
                   id: c._id,
-                  text: c.content,
+                  text: c.comment,
                   authorId: c.author?._id || c.author,
+                  authorName: c.author?.username || "Unknown",
                 })),
               }
             : p
@@ -122,7 +125,7 @@ export default function GroupPage() {
     if (!commentText.trim()) return;
 
     try {
-      const c = await addComment(postId, { content: commentText });
+      const c = await addComment(postId, commentText);
 
       setPosts((prev) =>
         prev.map((p) =>
@@ -133,8 +136,9 @@ export default function GroupPage() {
                   ...p.comments,
                   {
                     id: c._id,
-                    text: c.content,
+                    text: c.comment,
                     authorId: c.author,
+                    authorName: user?.username || "You",
                   },
                 ],
               }
@@ -193,7 +197,7 @@ export default function GroupPage() {
             <div key={post.id} className="bg-[#2a2a2a] p-4 rounded">
 
               <p>{post.text}</p>
-              <p className="text-xs text-gray-400">— {post.authorId}</p>
+              <p className="text-xs text-gray-400">— {post.authorName}</p>
 
               <div className="flex gap-4 text-sm mt-2">
                 <button onClick={() => handleLike(post.id)}>
@@ -212,7 +216,10 @@ export default function GroupPage() {
                       key={c.id}
                       className="bg-[#1a1a1a] p-2 rounded flex justify-between"
                     >
-                      <span>{c.text}</span>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">{c.authorName}</div>
+                        <span>{c.text}</span>
+                      </div>
 
                       {c.authorId === currentUserId && (
                         <button
