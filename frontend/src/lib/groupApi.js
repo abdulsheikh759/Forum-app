@@ -15,3 +15,8 @@ export const createGroup = async (data) => {
   const res = await api.post("/data/groups", data);
   return res.data;
 };
+
+export const fetchGroupMembers = async (groupId) => {
+  const res = await api.get(`/data/groups/${groupId}/members`);
+  return res.data.members;
+};

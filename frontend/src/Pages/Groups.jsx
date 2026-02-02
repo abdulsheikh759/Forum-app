@@ -103,6 +103,7 @@ export default function Home() {
                 ) : (
                     <div className="space-y-3">
                         {groups.map((group) => {
+                            const isMember = group.members?.includes(user?._id);
                             
                             return (
                                 <div
@@ -114,13 +115,21 @@ export default function Home() {
                                         {group.description}
                                     </p>
 
-                                     
-                                    <button
-                                        onClick={() => handleGroupClick(group._id)}
-                                        className="bg-blue-600 px-4 py-1 rounded"
-                                    >
-                                        Open Group
-                                    </button>
+                                    {isMember ? (
+                                        <button
+                                            onClick={() => navigate(`/group/${group._id}`)}
+                                            className="bg-green-600 hover:bg-green-700 px-4 py-1 rounded"
+                                        >
+                                            Open Group
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleGroupClick(group._id)}
+                                            className="bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded"
+                                        >
+                                            Join Group
+                                        </button>
+                                    )}
 
                                 </div>
                             );

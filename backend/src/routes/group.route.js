@@ -2,7 +2,8 @@ import express from "express";
 import {
   createGroup,
   getAllGroups,
-  joinGroup
+  joinGroup,
+  getGroupMembers
 } from "../controllers/groupController.js";
 import authProtect from "../middlewares/authMiddleware.js";
 
@@ -14,5 +15,6 @@ router.get("/groups", getAllGroups);
 // protected
 router.post("/groups", authProtect, createGroup);
 router.post("/groups/:id/join", authProtect, joinGroup);
+router.get("/groups/:id/members", authProtect, getGroupMembers);
 
 export default router;

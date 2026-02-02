@@ -35,7 +35,7 @@ export const createGroup = async (req, res) => {
 // ✅ Get All Groups (public)
 export const getAllGroups = async (req, res) => {
     try {
-        const groups = await Group.find().select("-members");
+        const groups = await Group.find();
         res.json({ message: "Groups fetched", success: true, groups });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
@@ -78,6 +78,35 @@ export const joinGroup = async (req, res) => {
         return res.json({
             message: "Joined group successfully",
             success: true
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+            success: false
+        });
+    }
+};
+
+// ✅ Get Group Members (logged-in user)
+export const getGroupMembers = async (req, res) => {
+    try {
+        const groupId = req.params.id;
+
+        const group = await Group.findById(groupId)
+            .populate("members", "username email");
+
+        if (!group) {
+            return res.status(404).json({
+                message: "Group not found",
+                success: false
+            });
+        }
+
+        return res.json({
+            message: "Members fetched",
+            success: true,
+            members: group.members
         });
 
     } catch (error) {
